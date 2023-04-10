@@ -49,7 +49,7 @@ class Scores extends StatelessWidget {
           Expanded(
             child: Center(
               child: Text(
-                "AI",
+                "Computer",
                 style: TextStyle(
                   color: Theme.of(context).buttonTheme.colorScheme?.primary,
                   fontSize: 16.0,

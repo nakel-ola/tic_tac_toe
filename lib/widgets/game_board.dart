@@ -21,7 +21,11 @@ class GameBoard extends StatelessWidget {
     bool isMobile = Responsive.isMobile(context);
     bool isTablet = Responsive.isTablet(context);
 
-    double sub = isMobile ? 0.85 : isTablet ? 0.5 : 0.35;
+    double sub = isMobile
+        ? 0.85
+        : isTablet
+            ? 0.5
+            : 0.35;
 
     double size = MediaQuery.of(context).size.width * sub;
 

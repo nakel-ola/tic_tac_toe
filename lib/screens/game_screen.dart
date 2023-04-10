@@ -31,6 +31,14 @@ class _GameScreenState extends State<GameScreen> {
       appBar: AppBar(
         title: const Text("Tic Tac Toe"),
         centerTitle: true,
+        leading: IconButton(
+          onPressed: () {
+            setState(() {
+              game.restartGame();
+            });
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
         actions: [
           IconButton(
             onPressed: () {
@@ -39,13 +47,14 @@ class _GameScreenState extends State<GameScreen> {
               });
             },
             icon: const Icon(Icons.refresh),
-          )
+          ),
+          const SizedBox(width: 8.0)
         ],
       ),
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: SizedBox(
-          width: double.infinity,
+      body: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -56,21 +65,21 @@ class _GameScreenState extends State<GameScreen> {
                 items: game.tiles,
                 onCardTap: (index) {
                   if (game.latestWinner != null) return;
-      
+
                   game.onTileTap(index);
                   setState(() {});
-      
+
                   Future.delayed(const Duration(milliseconds: 500), () {
                     game.computerPlay();
                     setState(() {});
                   });
                 },
                 winIndexes: game.latestWinner,
-                isAiTurn: game.playerTurn == "ai",
+                isAiTurn: game.playerTurn == "computer",
               ),
               const SizedBox(height: 24.0),
               Text(
-                game.playerTurn == "ai" ? "Ai turn" : "Your turn",
+                game.playerTurn == "computer" ? "Computer turn" : "Your turn",
                 style: TextStyle(
                   color: Theme.of(context).buttonTheme.colorScheme?.primary,
                   fontSize: 16.0,
