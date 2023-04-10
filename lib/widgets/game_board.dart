@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'responsive.dart';
+
 class GameBoard extends StatelessWidget {
   final List<String> items;
   final Function(int) onCardTap;
@@ -16,9 +18,16 @@ class GameBoard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isMobile = Responsive.isMobile(context);
+    bool isTablet = Responsive.isTablet(context);
+
+    double sub = isMobile ? 0.85 : isTablet ? 0.5 : 0.35;
+
+    double size = MediaQuery.of(context).size.width * sub;
+
     return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.9,
-      height: MediaQuery.of(context).size.width * 0.9,
+      width: size,
+      height: size,
       child: GridView(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
@@ -40,13 +49,13 @@ class GameBoard extends StatelessWidget {
                 child: AnimatedContainer(
                   duration: const Duration(seconds: 3),
                   child: items[i].isNotEmpty
-                    ? Center(
-                        child: Image.asset(
-                          items[i] == "o" ? "assets/o.png" : "assets/x.png",
-                          width: 60,
-                        ),
-                      )
-                    : null,
+                      ? Center(
+                          child: Image.asset(
+                            items[i] == "o" ? "assets/o.png" : "assets/x.png",
+                            width: 60,
+                          ),
+                        )
+                      : null,
                 ),
               ),
             )

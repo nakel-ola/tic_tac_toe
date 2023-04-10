@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'responsive.dart';
 
 class Scores extends StatelessWidget {
   final int userScore;
@@ -26,7 +27,7 @@ class Scores extends StatelessWidget {
             ),
           ),
           Expanded(
-            flex: 2,
+            flex: Responsive.isMobile(context) ? 2 : 1,
             child: Card(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)),

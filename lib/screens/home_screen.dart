@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../game.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -8,6 +10,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  Game game = Game();
+
   String currentOption = "";
   @override
   Widget build(BuildContext context) {
@@ -27,8 +31,26 @@ class _HomeScreenState extends State<HomeScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                buildImage(src: "assets/x.png", name: "x"),
-                buildImage(src: "assets/o.png", name: "o"),
+                buildImage(
+                  src: "assets/x.png",
+                  name: "x",
+                  onChanged: (value) {
+                    setState(() {
+                      currentOption = value;
+                      game.updatePlayer("x", "o");
+                    });
+                  },
+                ),
+                buildImage(
+                  src: "assets/o.png",
+                  name: "o",
+                  onChanged: (value) {
+                    setState(() {
+                      currentOption = value;
+                      game.updatePlayer("o", "x");
+                    });
+                  },
+                ),
               ],
             ),
             const Spacer(),
@@ -57,6 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
   buildImage({
     required String src,
     required String name,
+    required Function onChanged,
   }) {
     return Column(
       children: [
@@ -69,11 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Radio(
             value: name,
             groupValue: currentOption,
-            onChanged: (value) {
-              setState(() {
-                currentOption = value.toString();
-              });
-            },
+            onChanged: (value) => onChanged(value!),
           ),
         )
       ],
